@@ -1,3 +1,3 @@
-*marinina-goryaev*
-Маринина Анастасия - Prinkley
-Горяев Вадим - heraMMXXIII
+**marinina-goryaev** \n
+Маринина Анастасия - Prinkley \n
+Горяев Вадим - heraMMXXIII 
