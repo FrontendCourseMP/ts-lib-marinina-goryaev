@@ -1,1 +1,3 @@
-# Документация по вашему решению
+*marinina-goryaev*
+Маринина Анастасия - Prinkley
+Горяев Вадим - heraMMXXIII
