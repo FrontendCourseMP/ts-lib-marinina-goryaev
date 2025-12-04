@@ -102,6 +102,19 @@ export class MGValidator {
       case "custom":
         return typeof rule.value === "function" ? rule.value(value) : true;
 
+      case "phone":
+        return /^\d{10,}$/.test(value.replace(/\D/g,""));
+      
+      case "strongPassword":
+        return  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(value);
+      
+      case "dateNotFuture":
+        return new Date(value) <= new Date();
+
+      case "equals":
+        const targetField = document.querySelector(rule.value) as HTMLInputElement;
+        return value === targetField?.value;
+        
       default:
         return true;
     }

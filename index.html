@@ -1,32 +1,60 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ts-val</title>
-    <link rel="stylesheet" href="/src/style.css" />
-  </head>
-  <body>
-    <main>
-      <section>
-        <h1>Форма регистрации</h1>
-        <form novalidate id="form">
-          <label class="form-group">
-            Имя
-            <input type="text" name="name" required />
-            <p role="alert" aria-live="assertive"></p>
-          </label>
 
-          <label class="form-group">
-            Email
-            <input type="email" name="email" required />
-            <p role="alert" aria-live="assertive"></p>
-          </label>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ts-val</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
 
-          <button type="submit">Отправить</button>
-        </form>
-      </section>
-    </main>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<body>
+  <main>
+    <section>
+      <h1>Форма регистрации</h1>
+      <form novalidate id="form">
+        <label class="form-group">
+          Имя
+          <input type="text" name="name" required />
+          <p role="alert" aria-live="assertive"></p>
+        </label>
+
+        <label class="form-group">
+          Email
+          <input type="email" name="email" required />
+          <p role="alert" aria-live="assertive"></p>
+        </label>
+
+        <label class="form-group">
+          Телефон
+          <input type="tel" name="phone" required />
+          <p role="alert" aria-live="assertive"></p>
+        </label>
+
+        <label class="form-group">
+          Дата рождения
+          <input type="date" name="birthDate" required />
+          <p role="alert" aria-live="assertive"></p>
+        </label>
+
+        <label class="form-group">
+          Пароль
+          <input type="password" name="password" required />
+          <p role="alert" aria-live="assertive"></p>
+        </label>
+
+        <label class="form-group">
+          Подтверждение пароля
+          <input type="password" name="confirmPassword" required />
+          <p role="alert" aria-live="assertive"></p>
+        </label>
+
+
+        <button type="submit">Отправить</button>
+      </form>
+    </section>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>

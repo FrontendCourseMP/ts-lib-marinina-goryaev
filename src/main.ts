@@ -15,6 +15,7 @@ validator
     ],
     errorContainer: 'input[name="name"] + p[role="alert"]',
   })
+
   .addField('input[name="email"]', {
     rules: [
       { rule: "required", value: undefined, errorMessage: "Email обязателен" },
@@ -40,4 +41,36 @@ validator
     result.errors.forEach((error) => {
       console.log(`  ${error.field}: ${error.message}`);
     });
-  });
+  })
+
+  .addField('input[name="password"]', {
+    rules: [
+      { rule: "required", value: undefined, errorMessage: "Пароль обязателен" },
+      { rule: "strongPassword", value: undefined, errorMessage: "Пароль должен содержать заглавные, строчные буквы и цифры, минимум 8 символов" },
+    ],
+    errorContainer: 'input[name="password"] + p[role="alert"]',
+  })
+
+  .addField('input[name="confirmPassword"]', {
+    rules: [
+      { rule: "required", value: undefined, errorMessage: "Подтверждение пароля обязательно" },
+      { rule: "equals", value: 'input[name="password"]', errorMessage: "Пароли не совпадают" },
+    ],
+    errorContainer: 'input[name="confirmPassword"] + p[role="alert"]',
+  })
+
+  .addField('input[name="phone"]', {
+    rules: [
+      { rule: "required", value: undefined, errorMessage: "Телефон обязателен" },
+      { rule: "phone", value: undefined, errorMessage: "Телефон должен содержать минимум 10 цифр" },
+    ],
+    errorContainer: 'input[name="phone"] + p[role="alert"]',
+  })
+  
+  .addField('input[name="birthDate"]', {
+    rules: [
+      { rule: "required", value: undefined, errorMessage: "Дата рождения обязательна" },
+      { rule: "dateNotFuture", value: undefined, errorMessage: "Дата не должна быть в будущем" },
+    ],
+    errorContainer: 'input[name="birthDate"] + p[role="alert"]',
+  })
