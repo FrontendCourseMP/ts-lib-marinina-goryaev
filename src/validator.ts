@@ -1,4 +1,8 @@
-import type { ValidationRule, ValidationResult, FieldConfig } from './types/types';
+import type {
+  ValidationRule,
+  ValidationResult,
+  FieldConfig,
+} from "./types/types";
 
 export class MGValidator {
   private formSelector: string;
@@ -18,7 +22,7 @@ export class MGValidator {
       return;
     }
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
       this.validate();
     });
@@ -38,12 +42,15 @@ export class MGValidator {
     return this;
   }
 
-  private validateField(fieldSelector: string, config: FieldConfig): { isValid: boolean; errors: string[] } {
+  private validateField(
+    fieldSelector: string,
+    config: FieldConfig
+  ): { isValid: boolean; errors: string[] } {
     const field = document.querySelector(fieldSelector) as HTMLInputElement;
     const errors: string[] = [];
 
     if (!field) {
-      return { isValid: false, errors: ['Поле не найдено'] };
+      return { isValid: false, errors: ["Поле не найдено"] };
     }
 
     const value = field.value.trim();
@@ -68,29 +75,29 @@ export class MGValidator {
 
   private checkRule(value: string, rule: ValidationRule): boolean {
     switch (rule.rule) {
-      case 'required':
+      case "required":
         return value.length > 0;
 
-      case 'minLength':
+      case "minLength":
         return value.length >= (rule.value || 0);
 
-      case 'maxLength':
+      case "maxLength":
         return value.length <= (rule.value || Infinity);
 
-      case 'email':
+      case "email":
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-      case 'hasAtSign':
-        return value.includes('@');
+      case "hasAtSign":
+        return value.includes("@");
 
-      case 'latinOrCyrillic':
+      case "latinOrCyrillic":
         return /^[a-zA-Zа-яА-ЯёЁ\s]*$/.test(value);
 
-      case 'pattern':
+      case "pattern":
         return new RegExp(rule.value).test(value);
 
-      case 'custom':
-        return typeof rule.value === 'function' ? rule.value(value) : true;
+      case "custom":
+        return typeof rule.value === "function" ? rule.value(value) : true;
 
       default:
         return true;
@@ -110,15 +117,15 @@ export class MGValidator {
         result.isValid = false;
         result.errors.push({
           field: fieldSelector,
-          message: validation.errors.join(', '),
+          message: validation.errors.join(", "),
         });
       }
     });
 
-    console.log('Результат валидации:', result);
+    console.log("Результат валидации:", result);
 
     if (result.isValid && this.successCallback) {
-      this.successCallback(new Event('submit'));
+      this.successCallback(new Event("submit"));
     } else if (!result.isValid && this.failCallback) {
       this.failCallback(result);
     }
@@ -138,11 +145,11 @@ export class MGValidator {
 
   private updateFieldStyles(field: HTMLInputElement, isValid: boolean): void {
     if (isValid) {
-      field.classList.remove('is-invalid');
-      field.classList.add('is-valid');
+      field.classList.remove("is-invalid");
+      field.classList.add("is-valid");
     } else {
-      field.classList.remove('is-valid');
-      field.classList.add('is-invalid');
+      field.classList.remove("is-valid");
+      field.classList.add("is-invalid");
     }
   }
 
@@ -153,7 +160,7 @@ export class MGValidator {
   ): void {
     let errorContainer: HTMLElement | null = null;
 
-    if (typeof config.errorContainer === 'string') {
+    if (typeof config.errorContainer === "string") {
       errorContainer = document.querySelector(config.errorContainer);
     } else {
       errorContainer = config.errorContainer;
@@ -164,11 +171,11 @@ export class MGValidator {
       return;
     }
 
-    errorContainer.innerHTML = '';
+    errorContainer.innerHTML = "";
 
     if (errors.length > 0) {
       errors.forEach((error) => {
-        const errorElement = document.createElement('span');
+        const errorElement = document.createElement("span");
         errorElement.textContent = error;
         errorContainer?.appendChild(errorElement);
       });
