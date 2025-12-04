@@ -90,6 +90,9 @@ export class MGValidator {
       case "hasAtSign":
         return value.includes("@");
 
+      case "hasDot":
+        return value.includes(".");
+
       case "latinOrCyrillic":
         return /^[a-zA-Zа-яА-ЯёЁ\s]*$/.test(value);
 

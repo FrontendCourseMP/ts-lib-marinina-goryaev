@@ -24,6 +24,11 @@ validator
         value: undefined,
         errorMessage: "Email должен содержать @",
       },
+      {
+        rule: "hasDot",
+        value: undefined,
+        errorMessage: "Email должен содержать точку (.)",
+      },
     ],
     errorContainer: 'input[name="email"] + p[role="alert"]',
   })
