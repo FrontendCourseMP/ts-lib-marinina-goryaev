@@ -4,13 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ts-val</title>
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
     <main>
       <section>
-        <form novalidate>
-          <label>Имя <input type="text" required></label>
-          <p role="alert" aria-live="assertive"></p>
+        <h1>Форма регистрации</h1>
+        <form novalidate id="form">
+          <label class="form-group">
+            Имя
+            <input type="text" name="name" required />
+            <p role="alert" aria-live="assertive"></p>
+          </label>
+
+          <label class="form-group">
+            Email
+            <input type="email" name="email" required />
+            <p role="alert" aria-live="assertive"></p>
+          </label>
+
           <button type="submit">Отправить</button>
         </form>
       </section>
