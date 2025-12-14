@@ -3,6 +3,12 @@ import type {
   ValidationResult,
   FieldConfig,
 } from "./types/types";
+import {
+  ErrorContainerNotFoundError,
+  FieldNotFoundError,
+  FormNotFoundError,
+  UnknownRuleError,
+} from "./errors";
 
 export class MGValidator {
   private formSelector: string;
@@ -18,8 +24,7 @@ export class MGValidator {
   private initForm(): void {
     const form = document.querySelector(this.formSelector) as HTMLFormElement;
     if (!form) {
-      console.warn(`Форма с селектором "${this.formSelector}" не найдена`);
-      return;
+      throw new FormNotFoundError(this.formSelector);
     }
 
     form.addEventListener("submit", (event) => {
@@ -32,8 +37,7 @@ export class MGValidator {
     const field = document.querySelector(fieldSelector) as HTMLInputElement;
 
     if (!field) {
-      console.warn(`Поле с селектором "${fieldSelector}" не найдено`);
-      return this;
+      throw new FieldNotFoundError(fieldSelector);
     }
 
     this.fields.set(fieldSelector, config);
@@ -103,7 +107,10 @@ export class MGValidator {
         return typeof rule.value === "function" ? rule.value(value) : true;
 
       case "phone":
-        return /^\d{10,}$/.test(value.replace(/\D/g,""));
+        // Удаляем только допустимые символы форматирования (пробелы, скобки, дефисы, плюсы)
+        const digitsOnly = value.replace(/[\s()\-+]/g, "");
+        // Проверяем, что остались только цифры и их минимум 10
+        return /^\d{10,}$/.test(digitsOnly) && !/[a-zA-Zа-яА-ЯёЁ]/.test(value);
       
       case "strongPassword":
         return  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(value);
@@ -112,11 +119,19 @@ export class MGValidator {
         return new Date(value) <= new Date();
 
       case "equals":
-        const targetField = document.querySelector(rule.value) as HTMLInputElement;
-        return value === targetField?.value;
+        if (typeof rule.value !== "string") {
+          throw new UnknownRuleError("equals");
+        }
+        const targetField = document.querySelector(
+          rule.value
+        ) as HTMLInputElement | null;
+        if (!targetField) {
+          throw new FieldNotFoundError(rule.value);
+        }
+        return value === targetField.value;
         
       default:
-        return true;
+        throw new UnknownRuleError(rule.rule);
     }
   }
 
@@ -183,8 +198,7 @@ export class MGValidator {
     }
 
     if (!errorContainer) {
-      console.warn(`Контейнер ошибок для поля "${fieldSelector}" не найден`);
-      return;
+      throw new ErrorContainerNotFoundError(fieldSelector);
     }
 
     errorContainer.innerHTML = "";
